@@ -51,8 +51,9 @@ struct ContentView: View {
         .fullScreenCover(isPresented: $showCropper) {
             if let image = selectedImage {
                 // Using convenience method for square cropping
-                MYImageCropper.squareCropper(
+                ImageCropView(viewModel: .init(
                     image: image,
+                    type: .square,
                     onDismiss: {
                         showCropper = false
                     },
@@ -74,10 +75,9 @@ struct ContentView: View {
 
 ```swift
 // Using custom aspect ratio (16:9)
-MYImageCropper.customCropper(
+ImageCropView(viewModel: .init(
     image: image,
-    width: 16,
-    height: 9,
+    type: .custom(width: 16, height: 9),
     onDismiss: {
         showCropper = false
     },
@@ -90,25 +90,6 @@ MYImageCropper.customCropper(
     }
 )
 ```
-
-### Direct View Model Usage
-
-For more control, you can create the view model directly:
-
-```swift
-ImageCropView(viewModel: ImageCropViewModel(
-    image: image,
-    type: .custom(width: 3, height: 4),
-    ondismiss: { /* handle dismiss */ },
-    onSave: { croppedImage in /* handle save */ }
-))
-```
-
-## Advanced Configuration
-
-The library provides two main aspect ratio types:
-- `.square`: 1:1 aspect ratio
-- `.custom(width:height:)`: Custom aspect ratio with specified dimensions
 
 ## Contributing
 
