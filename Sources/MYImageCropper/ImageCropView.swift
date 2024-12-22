@@ -84,5 +84,6 @@ public struct ImageCropView: View {
                     viewModel.updateLastValues()
                 }
         )
+        .clipped()
     }
 }
