@@ -63,7 +63,8 @@ public class ImageCropViewModel: ObservableObject {
         image: UIImage,
         type: ImageAspectRatioType,
         ondismiss: @escaping () -> Void,
-        onSave: @escaping (UIImage?) -> Void
+        onSave: @escaping (UIImage?) -> Void,
+        screenWidth: CGFloat = UIScreen.main.bounds.width
     ) {
         self.image = image
         self.type = type
@@ -73,7 +74,6 @@ public class ImageCropViewModel: ObservableObject {
         // Calculate the display size while maintaining aspect ratio
         let imageWidth = image.size.width
         let imageHeight = image.size.height
-        let screenWidth = UIScreen.main.bounds.width
         let displayHeight = (screenWidth * imageHeight) / imageWidth
         self.imageSize = CGSize(width: screenWidth, height: displayHeight)
 

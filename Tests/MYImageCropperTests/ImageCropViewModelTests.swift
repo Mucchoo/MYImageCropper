@@ -18,12 +18,12 @@ class ImageCropViewModelTests: XCTestCase {
 
     @MainActor
     override func setUp() async throws {
-        let size = CGSize(width: 200, height: 200)
+        let size = CGSize(width: 800, height: 800)
         image = createImage(size: size)
         dismissCalled = false
         savedImage = nil
         
-        sut = ImageCropViewModel(
+        sut = .init(
             image: image,
             type: .square,
             ondismiss: { [weak self] in
@@ -31,20 +31,19 @@ class ImageCropViewModelTests: XCTestCase {
             },
             onSave: { [weak self] image in
                 self?.savedImage = image
-            }
+            },
+            screenWidth: 400
         )
     }
 
     func test_whenInitializedWithSquareType_cropAreaShouldBeSquare() throws {
-        // Arrange
-        let squareImage = createImage(size: CGSize(width: 200, height: 150))
-        
         // Act
-        sut = ImageCropViewModel(
-            image: squareImage,
+        sut = .init(
+            image: createImage(size: CGSize(width: 200, height: 150)),
             type: .square,
             ondismiss: { },
-            onSave: { _ in }
+            onSave: { _ in },
+            screenWidth: 400
         )
         
         // Assert
@@ -52,15 +51,13 @@ class ImageCropViewModelTests: XCTestCase {
     }
 
     func test_whenInitializedWith3to4RatioAndWideImage_cropAreaShouldMatchHeight() throws {
-        // Arrange
-        let wideImage = createImage(size: CGSize(width: 420, height: 100))
-        
         // Act
         sut = ImageCropViewModel(
-            image: wideImage,
+            image: createImage(size: CGSize(width: 420, height: 100)),
             type: .custom(width: 3, height: 4),
             ondismiss: { },
-            onSave: { _ in }
+            onSave: { _ in },
+            screenWidth: 400
         )
         
         // Assert
@@ -68,15 +65,13 @@ class ImageCropViewModelTests: XCTestCase {
     }
 
     func test_whenInitializedWith3to4RatioAndTallImage_cropAreaShouldMatchWidth() throws {
-        // Arrange
-        let tallImage = createImage(size: CGSize(width: 300, height: 200))
-        
         // Act
         sut = ImageCropViewModel(
-            image: tallImage,
+            image: createImage(size: CGSize(width: 300, height: 200)),
             type: .custom(width: 3, height: 4),
             ondismiss: { },
-            onSave: { _ in }
+            onSave: { _ in },
+            screenWidth: 400
         )
         
         // Assert
@@ -100,55 +95,73 @@ class ImageCropViewModelTests: XCTestCase {
     }
 
     func test_whenDraggingRight_shouldNotExceedImageBoundary() throws {
+        // Arrange
+        sut = ImageCropViewModel(
+            image: createImage(size: CGSize(width: 800, height: 400)),
+            type: .square,
+            ondismiss: { },
+            onSave: { _ in },
+            screenWidth: 400
+        )
+        
         // Act
         sut.drag(CGSize(width: 1000, height: 0))
         
         // Assert
-        XCTAssertEqual(sut.offset.width, (200 - sut.maskSize.width) * 0.5)
+        XCTAssertEqual(sut.offset.width, 100.0)
     }
 
     func test_whenDraggingLeft_shouldNotExceedImageBoundary() throws {
+        // Arrange
+        sut = ImageCropViewModel(
+            image: createImage(size: CGSize(width: 800, height: 400)),
+            type: .square,
+            ondismiss: { },
+            onSave: { _ in },
+            screenWidth: 400
+        )
+        
         // Act
         sut.drag(CGSize(width: -1000, height: 0))
         
         // Assert
-        XCTAssertEqual(sut.offset.width, (200 - sut.maskSize.width) * -0.5)
+        XCTAssertEqual(sut.offset.width, -100.0)
     }
 
     func test_whenDraggingUp_shouldNotExceedImageBoundary() throws {
         // Arrange
-        let tallImage = createImage(size: CGSize(width: 200, height: 400))
         sut = ImageCropViewModel(
-            image: tallImage,
+            image: createImage(size: CGSize(width: 400, height: 800)),
             type: .square,
             ondismiss: { },
-            onSave: { _ in }
+            onSave: { _ in },
+            screenWidth: 400
         )
         
         // Act
         sut.drag(CGSize(width: 0, height: 1000))
         
         // Assert
-        XCTAssertEqual(sut.offset.height, (400 - sut.maskSize.height) * 0.5)
+        XCTAssertEqual(sut.offset.height, 200.0)
     }
 
     func test_whenDraggingDown_shouldNotExceedImageBoundary() throws {
         // Arrange
-        let tallImage = createImage(size: CGSize(width: 200, height: 400))
         sut = ImageCropViewModel(
-            image: tallImage,
+            image: createImage(size: CGSize(width: 400, height: 800)),
             type: .square,
             ondismiss: { },
-            onSave: { _ in }
+            onSave: { _ in },
+            screenWidth: 400
         )
         
         // Act
         sut.drag(CGSize(width: 0, height: -1000))
         
         // Assert
-        XCTAssertEqual(sut.offset.height, (400 - sut.maskSize.height) * -0.5)
+        XCTAssertEqual(sut.offset.height, -200.0)
     }
-
+    
     func test_whenDraggingWithinBounds_shouldAllowMovement() throws {
         // Arrange
         sut.magnify(2)
@@ -164,6 +177,13 @@ class ImageCropViewModelTests: XCTestCase {
 
     func test_whenDraggingEnds_shouldUpdatePositionForNextGesture() throws {
         // Arrange
+        sut = ImageCropViewModel(
+            image: createImage(size: CGSize(width: 400, height: 800)),
+            type: .square,
+            ondismiss: { },
+            onSave: { _ in },
+            screenWidth: 400
+        )
         sut.drag(CGSize(width: 0, height: 20))
         
         // Act
@@ -210,7 +230,7 @@ extension ImageCropViewModelTests {
             image: createImage(size: imageSize),
             type: .square,
             ondismiss: { },
-            onSave: { [weak self] in self?.savedImage = $0 }
+            onSave: { self.savedImage = $0 }
         )
         
         // Act
@@ -223,12 +243,11 @@ extension ImageCropViewModelTests {
 
     func test_whenCroppingWithDoubleZoom_croppedImageShouldBeHalfSize() throws {
         // Arrange
-        let imageSize = CGSize(width: 200, height: 200)
         sut = ImageCropViewModel(
-            image: createImage(size: imageSize),
+            image: createImage(size: CGSize(width: 200, height: 200)),
             type: .square,
             ondismiss: { },
-            onSave: { [weak self] in self?.savedImage = $0 }
+            onSave: { self.savedImage = $0 }
         )
         sut.magnify(2)
         
@@ -242,13 +261,12 @@ extension ImageCropViewModelTests {
 
     func test_whenImageIsRotated_shouldCorrectOrientation() throws {
         // Arrange
-        let imageSize = CGSize(width: 200, height: 200)
-        let rotatedImage = createImage(size: imageSize).rotated(to: .right)
+        let rotatedImage = createImage(size: CGSize(width: 200, height: 200)).rotated(to: .right)
         sut = ImageCropViewModel(
             image: rotatedImage,
             type: .square,
             ondismiss: { },
-            onSave: { [weak self] in self?.savedImage = $0 }
+            onSave: { self.savedImage = $0 }
         )
         
         // Act
@@ -261,12 +279,12 @@ extension ImageCropViewModelTests {
 
     func test_whenCropping3to4RatioImage_shouldMaintainAspectRatio() throws {
         // Arrange
-        let imageSize = CGSize(width: 300, height: 100)
         sut = ImageCropViewModel(
-            image: createImage(size: imageSize),
+            image: createImage(size: CGSize(width: 400, height: 400)),
             type: .custom(width: 3, height: 4),
             ondismiss: { },
-            onSave: { [weak self] in self?.savedImage = $0 }
+            onSave: { self.savedImage = $0 },
+            screenWidth: 400
         )
         
         // Act
