@@ -1,0 +1,31 @@
+.DS_Store
+/.build
+/Packages
+/*.xcodeproj
+xcuserdata/
+DerivedData/
+.swiftpm/config/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.netrc
+.swiftpm/
+
+# Package Manager
+Package.resolved
+
+# Code Coverage
+*.lcov
+.coverage/
+
+# IDE
+.idea/
+.vscode/
+
+# Documentation
+docs/api/
+jazzy/
+
+# Testing
+.build-test/
+
+# Swift Package Manager
+Package.pins
