@@ -42,14 +42,14 @@ public enum MYImageCropper {
     /// - Returns: An ImageCropView instance
     @MainActor public static func customCropper(
         image: UIImage,
-        height: CGFloat,
         width: CGFloat,
+        height: CGFloat,
         onDismiss: @escaping () -> Void,
         onSave: @escaping (UIImage?) -> Void
     ) -> ImageCropView {
         ImageCropView(viewModel: ImageCropViewModel(
             image: image,
-            type: .custom(height: height, width: width),
+            type: .custom(width: width, height: height),
             ondismiss: onDismiss,
             onSave: onSave
         ))
