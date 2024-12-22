@@ -18,14 +18,8 @@ jobs:
       with:
         xcode-version: latest-stable
         
-    - name: Build
-      run: swift build -v
+    - name: Build for iOS
+      run: xcodebuild build -scheme MYImageCropper -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=latest"
       
-    - name: Run tests
-      run: swift test -v
-      
-    - name: Build iOS target
-      run: xcodebuild build -scheme MYImageCropper
-      
-    - name: Run iOS tests
-      run: xcodebuild test -scheme MYImageCropper
+    - name: Test for iOS
+      run: xcodebuild test -scheme MYImageCropper -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=latest"
