@@ -11,18 +11,8 @@ import CoreGraphics
 /// A view model that manages the state and logic for image cropping functionality.
 /// This class handles image scaling, positioning, and cropping operations while maintaining
 /// the specified aspect ratio constraints.
-///
-/// Example usage:
-/// ```swift
-/// let viewModel = ImageCropViewModel(
-///     image: myImage,
-///     type: .square,
-///     onDismiss: { /* handle dismissal */ },
-///     onSave: { croppedImage in /* handle saved image */ }
-/// )
-/// ```
 @MainActor
-public class ImageCropViewModel: ObservableObject {
+class ImageCropViewModel: ObservableObject {
     /// The original image to be cropped
     let image: UIImage
     
@@ -39,19 +29,19 @@ public class ImageCropViewModel: ObservableObject {
     private let onSave: (UIImage?) -> Void
 
     /// The size of the cropping mask, calculated based on the aspect ratio and image size
-    @Published private(set) public var maskSize: CGSize = .zero
+    @Published private(set) var maskSize: CGSize = .zero
     
     /// The current scale factor of the image
-    @Published private(set) public var scale: CGFloat = 1.0
+    @Published private(set) var scale: CGFloat = 1.0
     
     /// The previous scale factor, used for gesture handling
-    @Published private(set) public var lastScale: CGFloat = 1.0
+    @Published private(set) var lastScale: CGFloat = 1.0
     
     /// The current offset of the image from its center position
-    @Published private(set) public var offset: CGSize = .zero
+    @Published private(set) var offset: CGSize = .zero
     
     /// The previous offset, used for gesture handling
-    @Published private(set) public var lastOffset: CGSize = .zero
+    @Published private(set) var lastOffset: CGSize = .zero
     
     /// Initializes a new image cropping view model
     /// - Parameters:
@@ -59,27 +49,12 @@ public class ImageCropViewModel: ObservableObject {
     ///   - type: The aspect ratio type for cropping (.square or .custom)
     ///   - onDismiss: A closure to be called when the cropping operation is cancelled
     ///   - onSave: A closure to be called with the cropped image when the operation is completed
-    public convenience init(
-        image: UIImage,
-        type: ImageAspectRatioType,
-        onDismiss: @escaping () -> Void,
-        onSave: @escaping (UIImage?) -> Void
-    ) {
-        self.init(
-            image: image,
-            type: type,
-            onDismiss: onDismiss,
-            onSave: onSave,
-            screenWidth: UIScreen.main.bounds.width
-        )
-    }
-    
-    internal init(
+    init(
         image: UIImage,
         type: ImageAspectRatioType,
         onDismiss: @escaping () -> Void,
         onSave: @escaping (UIImage?) -> Void,
-        screenWidth: CGFloat
+        screenWidth: CGFloat = UIScreen.main.bounds.width
     ) {
         self.image = image
         self.type = type
@@ -122,7 +97,7 @@ public class ImageCropViewModel: ObservableObject {
 
     /// Handles pinch gesture magnification
     /// - Parameter magnitude: The magnitude of the pinch gesture
-    public func magnify(_ magnitude: CGFloat) {
+    func magnify(_ magnitude: CGFloat) {
         scale = min(max(
             magnitude * lastScale, max(
                 maskSize.width / imageSize.width,
@@ -135,7 +110,7 @@ public class ImageCropViewModel: ObservableObject {
 
     /// Handles drag gesture translation
     /// - Parameter translation: The translation amount from the drag gesture
-    public func drag(_ translation: CGSize) {
+    func drag(_ translation: CGSize) {
         let newX = translation.width + lastOffset.width
         let newY = translation.height + lastOffset.height
         offset = constrainPositionToAllowedArea(x: newX, y: newY)
@@ -167,18 +142,18 @@ public class ImageCropViewModel: ObservableObject {
 
     /// Updates the last known scale and offset values
     /// Called when gestures end to prepare for the next gesture
-    public func updateLastValues() {
+    func updateLastValues() {
         lastScale = scale
         lastOffset = offset
     }
 
     /// Handles the cancel button tap by calling the dismiss closure
-    public func onCancelButton() {
+    func onCancelButton() {
         onDismiss()
     }
     
     /// Handles the save button tap by performing the crop operation and calling the save closure
-    public func onSaveButton() {
+    func onSaveButton() {
         let croppedImage = crop(image)
         onSave(croppedImage)
     }

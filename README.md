@@ -51,9 +51,9 @@ struct ContentView: View {
         .fullScreenCover(isPresented: $showCropper) {
             if let image = selectedImage {
                 // Using convenience method for square cropping
-                ImageCropView(viewModel: .init(
+                ImageCropView(
                     image: image,
-                    type: .square,
+                    aspectRatio: .square,
                     onDismiss: {
                         showCropper = false
                     },
@@ -75,9 +75,9 @@ struct ContentView: View {
 
 ```swift
 // Using custom aspect ratio (16:9)
-ImageCropView(viewModel: .init(
+ImageCropView(
     image: image,
-    type: .custom(width: 16, height: 9),
+    aspectRatio: .custom(width: 16, height: 9),
     onDismiss: {
         showCropper = false
     },

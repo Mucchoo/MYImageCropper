@@ -18,21 +18,35 @@ import SwiftUI
 ///
 /// Example usage:
 /// ```swift
-/// ImageCropView(viewModel: ImageCropViewModel(
+/// ImageCropView(
 ///     image: myImage,
-///     type: .square,
-///     ondismiss: { /* handle dismissal */ },
+///     aspectRatio: .square,
+///     onDismiss: { /* handle dismissal */ },
 ///     onSave: { croppedImage in /* handle saved image */ }
-/// ))
+/// )
 /// ```
 public struct ImageCropView: View {
     /// The view model that handles the cropping logic and state
     @StateObject private var viewModel: ImageCropViewModel
 
     /// Creates a new image cropping view
-    /// - Parameter viewModel: The view model that will manage the cropping state and operations
-    public init(viewModel: ImageCropViewModel) {
-        _viewModel = .init(wrappedValue: viewModel)
+    /// - Parameters:
+    ///   - image: The UIImage to be cropped
+    ///   - aspectRatio: The desired aspect ratio for cropping (square or custom)
+    ///   - onDismiss: Callback when cropping is cancelled
+    ///   - onSave: Callback with the cropped image result
+    public init(
+        image: UIImage,
+        aspectRatio: ImageAspectRatioType = .square,
+        onDismiss: @escaping () -> Void,
+        onSave: @escaping (UIImage?) -> Void
+    ) {
+        _viewModel = StateObject(wrappedValue: .init(
+            image: image,
+            type: aspectRatio,
+            onDismiss: onDismiss,
+            onSave: onSave
+        ))
     }
 
     public var body: some View {
