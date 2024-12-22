@@ -35,8 +35,8 @@ public enum MYImageCropper {
     /// Convenience method to create an image cropper view with a custom aspect ratio
     /// - Parameters:
     ///   - image: The image to be cropped
-    ///   - height: The height for the custom aspect ratio
     ///   - width: The width for the custom aspect ratio
+    ///   - height: The height for the custom aspect ratio
     ///   - onDismiss: Callback when cropping is cancelled
     ///   - onSave: Callback with the cropped image result
     /// - Returns: An ImageCropView instance

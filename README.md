@@ -76,8 +76,8 @@ struct ContentView: View {
 // Using custom aspect ratio (16:9)
 MYImageCropper.customCropper(
     image: image,
-    height: 9,
     width: 16,
+    height: 9,
     onDismiss: {
         showCropper = false
     },
@@ -98,7 +98,7 @@ For more control, you can create the view model directly:
 ```swift
 ImageCropView(viewModel: ImageCropViewModel(
     image: image,
-    type: .custom(height: 4, width: 3),
+    type: .custom(width: 3, height: 4),
     ondismiss: { /* handle dismiss */ },
     onSave: { croppedImage in /* handle save */ }
 ))
@@ -108,7 +108,7 @@ ImageCropView(viewModel: ImageCropViewModel(
 
 The library provides two main aspect ratio types:
 - `.square`: 1:1 aspect ratio
-- `.custom(height:width:)`: Custom aspect ratio with specified dimensions
+- `.custom(width:height:)`: Custom aspect ratio with specified dimensions
 
 ## Contributing
 
