@@ -26,7 +26,7 @@ class ImageCropViewModelTests: XCTestCase {
         sut = .init(
             image: image,
             type: .square,
-            ondismiss: { [weak self] in
+            onDismiss: { [weak self] in
                 self?.dismissCalled = true
             },
             onSave: { [weak self] image in
@@ -41,7 +41,7 @@ class ImageCropViewModelTests: XCTestCase {
         sut = .init(
             image: createImage(size: CGSize(width: 200, height: 150)),
             type: .square,
-            ondismiss: { },
+            onDismiss: { },
             onSave: { _ in },
             screenWidth: 400
         )
@@ -55,7 +55,7 @@ class ImageCropViewModelTests: XCTestCase {
         sut = ImageCropViewModel(
             image: createImage(size: CGSize(width: 420, height: 100)),
             type: .custom(width: 3, height: 4),
-            ondismiss: { },
+            onDismiss: { },
             onSave: { _ in },
             screenWidth: 400
         )
@@ -69,7 +69,7 @@ class ImageCropViewModelTests: XCTestCase {
         sut = ImageCropViewModel(
             image: createImage(size: CGSize(width: 300, height: 200)),
             type: .custom(width: 3, height: 4),
-            ondismiss: { },
+            onDismiss: { },
             onSave: { _ in },
             screenWidth: 400
         )
@@ -99,7 +99,7 @@ class ImageCropViewModelTests: XCTestCase {
         sut = ImageCropViewModel(
             image: createImage(size: CGSize(width: 800, height: 400)),
             type: .square,
-            ondismiss: { },
+            onDismiss: { },
             onSave: { _ in },
             screenWidth: 400
         )
@@ -116,7 +116,7 @@ class ImageCropViewModelTests: XCTestCase {
         sut = ImageCropViewModel(
             image: createImage(size: CGSize(width: 800, height: 400)),
             type: .square,
-            ondismiss: { },
+            onDismiss: { },
             onSave: { _ in },
             screenWidth: 400
         )
@@ -133,7 +133,7 @@ class ImageCropViewModelTests: XCTestCase {
         sut = ImageCropViewModel(
             image: createImage(size: CGSize(width: 400, height: 800)),
             type: .square,
-            ondismiss: { },
+            onDismiss: { },
             onSave: { _ in },
             screenWidth: 400
         )
@@ -150,7 +150,7 @@ class ImageCropViewModelTests: XCTestCase {
         sut = ImageCropViewModel(
             image: createImage(size: CGSize(width: 400, height: 800)),
             type: .square,
-            ondismiss: { },
+            onDismiss: { },
             onSave: { _ in },
             screenWidth: 400
         )
@@ -180,7 +180,7 @@ class ImageCropViewModelTests: XCTestCase {
         sut = ImageCropViewModel(
             image: createImage(size: CGSize(width: 400, height: 800)),
             type: .square,
-            ondismiss: { },
+            onDismiss: { },
             onSave: { _ in },
             screenWidth: 400
         )
@@ -229,7 +229,7 @@ extension ImageCropViewModelTests {
         sut = ImageCropViewModel(
             image: createImage(size: imageSize),
             type: .square,
-            ondismiss: { },
+            onDismiss: { },
             onSave: { self.savedImage = $0 }
         )
         
@@ -246,7 +246,7 @@ extension ImageCropViewModelTests {
         sut = ImageCropViewModel(
             image: createImage(size: CGSize(width: 200, height: 200)),
             type: .square,
-            ondismiss: { },
+            onDismiss: { },
             onSave: { self.savedImage = $0 }
         )
         sut.magnify(2)
@@ -265,7 +265,7 @@ extension ImageCropViewModelTests {
         sut = ImageCropViewModel(
             image: rotatedImage,
             type: .square,
-            ondismiss: { },
+            onDismiss: { },
             onSave: { self.savedImage = $0 }
         )
         
@@ -282,7 +282,7 @@ extension ImageCropViewModelTests {
         sut = ImageCropViewModel(
             image: createImage(size: CGSize(width: 400, height: 400)),
             type: .custom(width: 3, height: 4),
-            ondismiss: { },
+            onDismiss: { },
             onSave: { self.savedImage = $0 },
             screenWidth: 400
         )

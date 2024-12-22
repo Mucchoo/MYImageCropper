@@ -1,5 +1,3 @@
-import SwiftUI
-
 /// MYImageCropper is a Swift package that provides easy-to-use image cropping functionality
 /// with customizable aspect ratios for iOS applications.
 ///
@@ -12,46 +10,4 @@ import SwiftUI
 public enum MYImageCropper {
     /// The current version of the library
     public static let version = "1.0.0"
-    
-    /// Convenience method to create an image cropper view with a square aspect ratio
-    /// - Parameters:
-    ///   - image: The image to be cropped
-    ///   - onDismiss: Callback when cropping is cancelled
-    ///   - onSave: Callback with the cropped image result
-    /// - Returns: An ImageCropView instance
-    @MainActor public static func squareCropper(
-        image: UIImage,
-        onDismiss: @escaping () -> Void,
-        onSave: @escaping (UIImage?) -> Void
-    ) -> ImageCropView {
-        ImageCropView(viewModel: ImageCropViewModel(
-            image: image,
-            type: .square,
-            ondismiss: onDismiss,
-            onSave: onSave
-        ))
-    }
-    
-    /// Convenience method to create an image cropper view with a custom aspect ratio
-    /// - Parameters:
-    ///   - image: The image to be cropped
-    ///   - width: The width for the custom aspect ratio
-    ///   - height: The height for the custom aspect ratio
-    ///   - onDismiss: Callback when cropping is cancelled
-    ///   - onSave: Callback with the cropped image result
-    /// - Returns: An ImageCropView instance
-    @MainActor public static func customCropper(
-        image: UIImage,
-        width: CGFloat,
-        height: CGFloat,
-        onDismiss: @escaping () -> Void,
-        onSave: @escaping (UIImage?) -> Void
-    ) -> ImageCropView {
-        ImageCropView(viewModel: ImageCropViewModel(
-            image: image,
-            type: .custom(width: width, height: height),
-            ondismiss: onDismiss,
-            onSave: onSave
-        ))
-    }
 }

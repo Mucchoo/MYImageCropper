@@ -17,7 +17,7 @@ import CoreGraphics
 /// let viewModel = ImageCropViewModel(
 ///     image: myImage,
 ///     type: .square,
-///     ondismiss: { /* handle dismissal */ },
+///     onDismiss: { /* handle dismissal */ },
 ///     onSave: { croppedImage in /* handle saved image */ }
 /// )
 /// ```
@@ -57,18 +57,33 @@ public class ImageCropViewModel: ObservableObject {
     /// - Parameters:
     ///   - image: The UIImage to be cropped
     ///   - type: The aspect ratio type for cropping (.square or .custom)
-    ///   - ondismiss: A closure to be called when the cropping operation is cancelled
+    ///   - onDismiss: A closure to be called when the cropping operation is cancelled
     ///   - onSave: A closure to be called with the cropped image when the operation is completed
-    public init(
+    public convenience init(
         image: UIImage,
         type: ImageAspectRatioType,
-        ondismiss: @escaping () -> Void,
+        onDismiss: @escaping () -> Void,
+        onSave: @escaping (UIImage?) -> Void
+    ) {
+        self.init(
+            image: image,
+            type: type,
+            onDismiss: onDismiss,
+            onSave: onSave,
+            screenWidth: UIScreen.main.bounds.width
+        )
+    }
+    
+    internal init(
+        image: UIImage,
+        type: ImageAspectRatioType,
+        onDismiss: @escaping () -> Void,
         onSave: @escaping (UIImage?) -> Void,
-        screenWidth: CGFloat = UIScreen.main.bounds.width
+        screenWidth: CGFloat
     ) {
         self.image = image
         self.type = type
-        self.onDismiss = ondismiss
+        self.onDismiss = onDismiss
         self.onSave = onSave
         
         // Calculate the display size while maintaining aspect ratio
