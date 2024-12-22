@@ -1,5 +1,4 @@
-# MYImageCropper
-[![](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
+# MYImageCropper [![](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
 A SwiftUI-based image cropping library for iOS that provides an intuitive interface for cropping images with customizable aspect ratios.
 
