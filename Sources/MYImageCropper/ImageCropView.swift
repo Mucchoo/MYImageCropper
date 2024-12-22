@@ -7,9 +7,30 @@
 
 import SwiftUI
 
+/// A SwiftUI view that provides image cropping functionality.
+///
+/// This view displays an interface for cropping images with the following features:
+/// - Pinch to zoom the image
+/// - Drag to pan the image
+/// - Maintains aspect ratio according to the specified configuration
+/// - Preview of the crop area with a mask
+/// - Cancel and Save actions
+///
+/// Example usage:
+/// ```swift
+/// ImageCropView(viewModel: ImageCropViewModel(
+///     image: myImage,
+///     type: .square,
+///     ondismiss: { /* handle dismissal */ },
+///     onSave: { croppedImage in /* handle saved image */ }
+/// ))
+/// ```
 public struct ImageCropView: View {
+    /// The view model that handles the cropping logic and state
     @StateObject private var viewModel: ImageCropViewModel
 
+    /// Creates a new image cropping view
+    /// - Parameter viewModel: The view model that will manage the cropping state and operations
     public init(viewModel: ImageCropViewModel) {
         _viewModel = .init(wrappedValue: viewModel)
     }
