@@ -2,6 +2,10 @@
 
 A SwiftUI-based image cropping library for iOS that provides an intuitive interface for cropping images with customizable aspect ratios.
 
+<p align="center">
+<img src="https://github.com/user-attachments/assets/d7211494-f9fc-4bec-974e-85359dca8e1f" width="300"/>
+</p>
+
 ## Features
 
 - 📱 Native SwiftUI implementation
