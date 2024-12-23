@@ -95,6 +95,10 @@ ImageCropView(
 )
 ```
 
+## Demo
+
+Check out our [demo application](https://github.com/Mucchoo/MYImageCropperDemo) to see MYImageCropper in action:
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
