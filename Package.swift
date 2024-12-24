@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "MYImageCropper",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v14)
     ],
     products: [
         .library(
