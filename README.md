@@ -17,7 +17,7 @@ A SwiftUI-based image cropping library for iOS that provides an intuitive interf
 
 ## Requirements
 
-- iOS 14.0+
+- iOS 15.0+
 
 ## Installation
 
