@@ -69,7 +69,7 @@ public struct ImageCropView: View {
                 )
 
             VStack {
-                Text("Select Crop Area")
+                Text(String(localized: "Select Crop Area"))
                     .font(.system(size: 20, weight: .bold))
                     .padding(.top, 100)
                     .foregroundColor(.white)
@@ -80,7 +80,7 @@ public struct ImageCropView: View {
                     Button {
                         viewModel.onCancelButton()
                     } label: {
-                        Text("Cancel")
+                        Text(String(localized: "Cancel"))
                             .font(.system(size: 20, weight: .bold))
                             .foregroundColor(.white)
                     }
@@ -90,7 +90,7 @@ public struct ImageCropView: View {
                     Button {
                         viewModel.onSaveButton()
                     } label: {
-                        Text("Save")
+                        Text(String(localized: "Save"))
                             .font(.system(size: 20, weight: .bold))
                             .foregroundColor(.white)
                     }
